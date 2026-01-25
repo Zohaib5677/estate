@@ -8,7 +8,7 @@ import Contact from './pages/Contact.jsx'
 import SignIn from './pages/SignIn.jsx'
 import SignUp from './pages/Signup.jsx'
 import Profile from './pages/Profile.jsx'
-
+import PrivateRoute from './components/PrivateRoute.jsx'
 import './App.css'
 
 function App() {
@@ -24,7 +24,9 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route element={<PrivateRoute />}>
+          <Route path="/profile" element={<Profile />} />
+        </Route>
       </Routes>
     </BrowserRouter>
 
