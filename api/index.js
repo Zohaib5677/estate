@@ -5,7 +5,8 @@ import 'dotenv/config';
 import userRoutes from './routes/user.js';
 import connectDB from './config/mongodb.js';
 import authRoutes from './routes/auth.js';
-
+import uploadRoutes from './routes/upload.js';
+import listingrouter from './routes/listing.js';
 const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -15,9 +16,11 @@ app.use(cors({
   credentials: true                 // allow cookies/credentials
 }));
 app.use(express.json());
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
-
+app.use("/api/listings", listingrouter);
 app.use("/api/users",   userRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api", uploadRoutes);
