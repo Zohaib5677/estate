@@ -170,9 +170,11 @@ setUpdating(true); // ✅ start loading
         <button disabled={updating}  className="bg-slate-700 text-white rounded-lg p-3 uppercase hover:opacity-95">
           {updating ? "Updating..." : "Update Profile"}
         </button>
-
+        
       </form>
-
+         <button onClick={() => navigate('/create-listing')}  className="bg-green-700 text-white rounded-lg p-3 uppercase hover:opacity-95">
+         Create Listing (coming soon)
+        </button>
       <div className="flex justify-between mt-5">
 
         <span onClick={deleteAccount} className="text-red-700 cursor-pointer">
