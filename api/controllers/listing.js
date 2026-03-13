@@ -33,3 +33,34 @@ export const deleteListing=async (req,res)=>{
         res.status(400).json({ message: error.message });
     }
 }
+export const updateListing=async (req,res)=>{
+    try {
+        const listing = await Listing.findById(req.params.id)
+        if(!listing){
+            return res.status(404).json({ message: "Listing not found" });
+        }
+        const updatedListing = await Listing.findByIdAndUpdate(
+            req.params.id,
+            {
+              $set: req.body,
+            },
+            { new: true }
+          );
+          res.status(200).json(updatedListing);
+        
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+
+}    
+export const listing=async (req, res) => {
+    try {
+        const listing = await Listing.findById(req.params.id);
+        if (!listing) {
+            return res.status(404).json({ message: "Listing not found" });
+        }
+        res.status(200).json(listing);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+};    

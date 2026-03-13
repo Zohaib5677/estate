@@ -12,6 +12,8 @@ import PrivateRoute from './components/PrivateRoute.jsx'
 import Listing from './pages/Listing.jsx'
 import './App.css'
 import CreatListing from './pages/CreateListing.jsx'
+import UpdateListing from './pages/UpdateListing.jsx'
+
 function App() {
 
 
@@ -27,6 +29,7 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/listings/:listingId" element={<Listing />} />
         <Route path="/create-listing" element={<CreatListing />} />
+        <Route path="/update-listing/:listingId" element={<UpdateListing />} />
         <Route element={<PrivateRoute />}>
           <Route path="/profile" element={<Profile />} />
         </Route>
