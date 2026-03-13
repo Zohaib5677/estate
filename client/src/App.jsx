@@ -25,7 +25,7 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/listing" element={<Listing />} />
+        <Route path="/listings/:listingId" element={<Listing />} />
         <Route path="/create-listing" element={<CreatListing />} />
         <Route element={<PrivateRoute />}>
           <Route path="/profile" element={<Profile />} />

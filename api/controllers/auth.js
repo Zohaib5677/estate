@@ -1,6 +1,7 @@
 import User from "../models/user.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import cookieParser from "cookie-parser";
 export const signup = async (req, res) => {
   try {
     const { username, email, password } = req.body;
@@ -46,7 +47,7 @@ export const signin = async (req, res) => {
       return res.status(400).json({ success: false, message: "Invalid credentials" });
     }
     const token=jwt.sign({id:user._id},process.env.JWT_SECRET,{expiresIn:'1d'});
-    res.cookie('token', token, {
+    res.cookie('access_token', token, {
       httpOnly: true,
       maxAge: 7 * 24 * 60 * 60 * 1000
     });
@@ -94,9 +95,28 @@ export const google = async (req, res, next) => {
 };
 export const signout=async(req,res)=>{
   try {
-    res.clearCookie('token');
+    res.clearCookie('access_token');
     res.status(200).json({ success: true, message: "User signed out successfully" });
   } catch (error) {
     res.status(500).json({ success: false, message: "Error during signout" });
   }
+};
+
+
+export const verifyToken = (req, res, next) => {
+
+
+    const token = req.cookies.access_token;
+
+  if (!token) return res.status(401).json("Unauthorized");
+
+  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+
+    if (err) return res.status(403).json("Token is not valid");
+
+    req.user = user;
+
+    next();
+  });
+
 };

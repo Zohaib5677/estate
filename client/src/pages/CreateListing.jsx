@@ -110,7 +110,7 @@ export default function CreateListing() {
       console.log("API Response:", res.data);
       if(res.status === 201)
       {        toast.success("Listing created successfully!");
-        navigate(`/listing/${res.data._id}`);
+        navigate(`/listings/${res.data._id}`);
       }
 
       setloading(false);
