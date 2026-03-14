@@ -204,7 +204,9 @@
     "zod": "^4.2.1",
     "zod-validation-error": "^4.0.2"
   },
-  "devDependencies": {},
+  "devDependencies": {
+     "vite": "..."
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
