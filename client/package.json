@@ -110,8 +110,6 @@
     "json5": "^2.2.3",
     "keyv": "^4.5.4",
     "levn": "^0.4.1",
-    "lightningcss": "^1.32.0",
-    "lightningcss-win32-x64-msvc": "^1.30.2",
     "locate-path": "^6.0.0",
     "lodash": "^4.17.23",
     "lodash.camelcase": "^4.3.0",
@@ -205,6 +203,7 @@
     "zod-validation-error": "^4.0.2"
   },
   "devDependencies": {
+    "lightningcss": "^1.32.0",
     "vite": "..."
   },
   "scripts": {
