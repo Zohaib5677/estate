@@ -13,7 +13,8 @@ import Listing from './pages/Listing.jsx'
 import './App.css'
 import CreatListing from './pages/CreateListing.jsx'
 import UpdateListing from './pages/UpdateListing.jsx'
-
+import Header from './components/Header.jsx'
+import Search from './pages/Search.jsx'
 function App() {
 
 
@@ -21,14 +22,16 @@ function App() {
     <>
     <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} />
     <BrowserRouter>
+    <Header />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/listings/:listingId" element={<Listing />} />
+        <Route path="/listing/:listingId" element={<Listing />} />
         <Route path="/create-listing" element={<CreatListing />} />
+        <Route path="/search" element={<Search />} />
         <Route path="/update-listing/:listingId" element={<UpdateListing />} />
         <Route element={<PrivateRoute />}>
           <Route path="/profile" element={<Profile />} />

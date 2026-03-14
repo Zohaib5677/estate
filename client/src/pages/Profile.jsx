@@ -6,18 +6,22 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
   deleteUserFailure,
+
   deleteUserStart,
   deleteUserSuccess,
+  updateUserAvatar,
 } from "../redux/user/userSlice";
 import { Link } from "react-router-dom";
+import { useParams } from 'react-router-dom';
 
 
 
 const Profile = () => {
+    const params = useParams();
   const dispatch = useDispatch(); // ✅ add this
   const fileRef = useRef(null);
   const navigate = useNavigate();
-  const currentUser = useSelector((state) => state.user.currentUser);
+  const {currentUser} = useSelector((state) => state.user);
   const [formData, setFormData] = useState({});
   const [imageUrl, setImageUrl] = useState("");
   const [uploading, setUploading] = useState(false);
@@ -37,10 +41,22 @@ const [userListings, setUserListings] = useState([]);  // Upload Image to Cloudi
       );
       console.log(res.data);
       const url = res.data.secure_url;
-
+    console.log("Current User:", currentUser);
+console.log("User ID:", currentUser?._id);
+const res1 = await axios.put(
+    `http://localhost:3000/api/users/updateimage/${currentUser._id}`,
+    { image: url },
+    { withCredentials: true }
+  );
+        if(!res1)
+      {
+        console.log("Failed to update user image in backend");
+      }
+      
       console.log("Cloudinary Image URL:", url);
 
       setImageUrl(url);
+      dispatch(updateUserAvatar(url));
 
       setUploading(false);
     } catch (error) {
