@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import {useState} from 'react'
 import axios from 'axios';
+import API_URL from '../utils/config';
 import {toast} from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import Oath from '../components/Oath';
@@ -22,7 +23,7 @@ export default function SignUp() {
     //submit form data to backend
     axios.defaults.withCredentials=true;
     try {
-      const response = await axios.post("http://localhost:3000/api/auth/signup", formData);
+      const response = await axios.post(`${API_URL}/api/auth/signup`, formData);
       toast.success("Signup successful!");
       navigate('/signin');
       console.log(response.data);

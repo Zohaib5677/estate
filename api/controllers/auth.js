@@ -48,9 +48,11 @@ export const signin = async (req, res) => {
     }
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
     const { password: _pw, ...userData } = user._doc;
+    const isProd = process.env.NODE_ENV === 'production';
     res.cookie('access_token', token, {
       httpOnly: true,
-      sameSite: 'lax',
+      sameSite: isProd ? 'none' : 'lax',
+      secure: isProd,
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
     return res.status(200).json({ message: 'User logged in successfully', success: true, ...userData });
@@ -63,11 +65,12 @@ export const signin = async (req, res) => {
 export const google = async (req, res, next) => {
   try {
     const user = await User.findOne({ email: req.body.email });
+    const isProd = process.env.NODE_ENV === 'production';
     if (user) {
       const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
       const { password: pass, ...rest } = user._doc;
       res
-        .cookie('access_token', token, { httpOnly: true, sameSite: 'lax' })
+        .cookie('access_token', token, { httpOnly: true, sameSite: isProd ? 'none' : 'lax', secure: isProd })
         .status(200)
         .json(rest);
     } else {
@@ -87,7 +90,7 @@ export const google = async (req, res, next) => {
       const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET);
       const { password: pass, ...rest } = newUser._doc;
       res
-        .cookie('access_token', token, { httpOnly: true, sameSite: 'lax' })
+        .cookie('access_token', token, { httpOnly: true, sameSite: isProd ? 'none' : 'lax', secure: isProd })
         .status(200)
         .json(rest);
     }

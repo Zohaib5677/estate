@@ -4,6 +4,7 @@ import { uploadImage } from "../utils/cloudinaryUpload";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+import API_URL from "../utils/config";
 
 export default function UpdateListing() {
     const currentUser = useSelector((state) => state.user.currentUser);
@@ -32,7 +33,7 @@ export default function UpdateListing() {
         const fetchListing = async () => {
             try {
                const res = await axios.get(
-  `http://localhost:3000/api/listings/listings/${params.listingId}`,
+  `${API_URL}/api/listings/listings/${params.listingId}`,
   { withCredentials: true }
 );
                 if (res.status === 200) {
@@ -129,7 +130,7 @@ fetchListing();
                 setError("Discount must be lower than regular price");
                 toast.error("Discount must be lower than regular price");
             }
-            const res = await axios.put(`http://localhost:3000/api/listings/update/${params.listingId}`, formData, { withCredentials: true });
+            const res = await axios.put(`${API_URL}/api/listings/update/${params.listingId}`, formData, { withCredentials: true });
             console.log("API Response:", res.data);
             if (res.status === 200) {
                 toast.success("Listing updated successfully!");

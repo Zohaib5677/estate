@@ -16,6 +16,7 @@ import {
 } from 'react-icons/fa';
 import Contact from '../pages/Contact';
 import axios from 'axios';
+import API_URL from '../utils/config';
 // https://sabe.io/blog/javascript-format-numbers-commas#:~:text=The%20best%20way%20to%20format,format%20the%20number%20with%20commas.
 
 export default function Listing() {
@@ -34,7 +35,7 @@ export default function Listing() {
       try {
         setLoading(true);
         const res = await axios.get(
-          `http://localhost:3000/api/listings/listings/${params.listingId}`,
+          `${API_URL}/api/listings/listings/${params.listingId}`,
           { withCredentials: true }
         );
         const data = await res.data;

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import ListingItem from "../components/ListingItem";
 import axios from "axios";
+import API_URL from "../utils/config";
 
 export default function Search() {
 
@@ -66,7 +67,7 @@ export default function Search() {
 
               
        const res = await axios.get(
-                `http://localhost:3000/api/listings/get?${searchQuery}`,
+                `${API_URL}/api/listings/get?${searchQuery}`,
                 { withCredentials: true }
               );
         const data = await res.data;

@@ -5,7 +5,8 @@ import { getAuth, GoogleAuthProvider,signInWithPopup } from 'firebase/auth';
 import { app } from '../firebase';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
-import { signInFailure,signInStart,signInSuccess } from '../redux/user/userSlice';  
+import { signInFailure,signInStart,signInSuccess } from '../redux/user/userSlice';
+import API_URL from '../utils/config';
 
 export default function OAuth() {
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ export default function OAuth() {
         const user = result.user;
 
         const response = await axios.post(
-        'http://localhost:3000/api/auth/google',
+        `${API_URL}/api/auth/google`,
         {
           name: user.displayName,
           email: user.email,

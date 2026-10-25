@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
 import axios from "axios";
+import API_URL from "../utils/config";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
@@ -44,7 +45,7 @@ const [userListings, setUserListings] = useState([]);  // Upload Image to Cloudi
     console.log("Current User:", currentUser);
 console.log("User ID:", currentUser?._id);
 const res1 = await axios.put(
-    `http://localhost:3000/api/users/updateimage/${currentUser._id}`,
+    `${API_URL}/api/users/updateimage/${currentUser._id}`,
     { image: url },
     { withCredentials: true }
   );
@@ -76,7 +77,7 @@ const res1 = await axios.put(
     setUpdating(true); // ✅ start loading
     try {
       const res = await axios.post(
-        `http://localhost:3000/api/users/update/${currentUser._id}`,
+        `${API_URL}/api/users/update/${currentUser._id}`,
         {
           ...formData,
           avatar: imageUrl, // cloudinary image
@@ -102,7 +103,7 @@ const res1 = await axios.put(
     dispatch(deleteUserStart());
     try {
       await axios.delete(
-        `http://localhost:3000/api/users/delete/${currentUser._id}`,
+        `${API_URL}/api/users/delete/${currentUser._id}`,
       );
       toast.success("Account deleted successfully!");
       dispatch(deleteUserSuccess());
@@ -115,7 +116,7 @@ const res1 = await axios.put(
   };
   const signOut = async () => {
     try {
-      await axios.post("http://localhost:3000/api/auth/signout");
+      await axios.post(`${API_URL}/api/auth/signout`);
       toast.success("Signed out successfully!");
       navigate("/signin");
       // Optionally, you can also dispatch a logout action here
@@ -128,7 +129,7 @@ const res1 = await axios.put(
   const handleshowlistings = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:3000/api/listings/getlistings/${currentUser._id}`,
+        `${API_URL}/api/listings/getlistings/${currentUser._id}`,
         { withCredentials: true },
       );
 
@@ -145,7 +146,7 @@ const res1 = await axios.put(
   const handleListingDelete = async (listingId) => {
     try {
       await axios.delete(
-        `http://localhost:3000/api/listings/deleteListing/${listingId}`,
+        `${API_URL}/api/listings/deleteListing/${listingId}`,
         { withCredentials: true }
       );
       toast.success("Listing deleted successfully!");

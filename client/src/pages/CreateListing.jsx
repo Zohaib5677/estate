@@ -4,6 +4,7 @@ import { uploadImage } from "../utils/cloudinaryUpload";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import API_URL from "../utils/config";
 export default function CreateListing() {
     const currentUser = useSelector((state) => state.user.currentUser);
     const navigate = useNavigate();
@@ -106,7 +107,7 @@ export default function CreateListing() {
         setError("Discount must be lower than regular price");
         toast.error("Discount must be lower than regular price");
       }
-      const res=await axios.post("http://localhost:3000/api/listings/create", body);
+      const res=await axios.post(`${API_URL}/api/listings/create`, body);
       console.log("API Response:", res.data);
       if(res.status === 201)
       {        toast.success("Listing created successfully!");

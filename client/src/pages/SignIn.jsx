@@ -1,6 +1,7 @@
 import { Link,useNavigate } from 'react-router-dom';
 import {useState} from 'react'
 import axios from 'axios';
+import API_URL from '../utils/config';
 import {toast} from 'react-toastify';
 import {useDispatch,useSelector} from 'react-redux';
 import { signInFailure,signInStart,signInSuccess } from '../redux/user/userSlice';
@@ -23,7 +24,7 @@ export default function SignIn() {
     axios.defaults.withCredentials=true;
     try {
       dispatch(signInStart());
-      const response = await axios.post("http://localhost:3000/api/auth/signin", formData);
+      const response = await axios.post(`${API_URL}/api/auth/signin`, formData);
       toast.success("Signin successful!");
       dispatch(signInSuccess(response.data));
       navigate('/profile');
