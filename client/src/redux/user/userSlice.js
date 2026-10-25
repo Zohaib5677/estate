@@ -11,7 +11,6 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     signInStart(state) {
-       state.currentUser = action.payload.user;  // Assuming response includes user
       state.loading = true;
       state.error = null;
     },

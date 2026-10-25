@@ -46,12 +46,14 @@ export const signin = async (req, res) => {
     if(!isMatch){
       return res.status(400).json({ success: false, message: "Invalid credentials" });
     }
-    const token=jwt.sign({id:user._id},process.env.JWT_SECRET,{expiresIn:'1d'});
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
+    const { password: _pw, ...userData } = user._doc;
     res.cookie('access_token', token, {
       httpOnly: true,
-      maxAge: 7 * 24 * 60 * 60 * 1000
+      sameSite: 'lax',
+      maxAge: 7 * 24 * 60 * 60 * 1000,
     });
-    return res.status(200).json({message:"User logged in successfully", success:true});   
+    return res.status(200).json({ message: 'User logged in successfully', success: true, ...userData });
 
   } catch (error) {
     res.status(500).json({ success: false, message: "Error during signin" });
@@ -65,7 +67,7 @@ export const google = async (req, res, next) => {
       const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
       const { password: pass, ...rest } = user._doc;
       res
-        .cookie('access_token', token, { httpOnly: true })
+        .cookie('access_token', token, { httpOnly: true, sameSite: 'lax' })
         .status(200)
         .json(rest);
     } else {
@@ -85,7 +87,7 @@ export const google = async (req, res, next) => {
       const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET);
       const { password: pass, ...rest } = newUser._doc;
       res
-        .cookie('access_token', token, { httpOnly: true })
+        .cookie('access_token', token, { httpOnly: true, sameSite: 'lax' })
         .status(200)
         .json(rest);
     }
