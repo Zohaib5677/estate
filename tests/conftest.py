@@ -6,7 +6,7 @@ from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 
 
-BASE_URL = os.environ.get("BASE_URL", "http://localhost:5173")
+BASE_URL = os.environ.get("BASE_URL", "http://devops-lab-alb-1299799687.eu-north-1.elb.amazonaws.com")
 
 
 def pytest_configure(config):
