@@ -14,9 +14,20 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 connectDB();
+
+const allowedOrigins = process.env.CORS_ORIGIN
+  ? process.env.CORS_ORIGIN.split(',')
+  : ['http://localhost:5173', 'http://localhost', 'http://localhost:80'];
+
 app.use(cors({
-  origin: 'http://localhost:5173',  // frontend URL
-  credentials: true                 // allow cookies/credentials
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
 }));
 
 

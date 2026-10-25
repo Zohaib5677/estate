@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:7.0
+    container_name: estate-mongo
+    restart: unless-stopped
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - estate-network
+
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    container_name: estate-api
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - MONGO_URI=mongodb://mongodb:27017/estate
+      - JWT_SECRET=zohaib
+      - PORT=3000
+      - CORS_ORIGIN=http://localhost
+    depends_on:
+      - mongodb
+    networks:
+      - estate-network
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: estate-client
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      - api
+    networks:
+      - estate-network
+
+volumes:
+  mongo_data:
+
+networks:
+  estate-network:
+    driver: bridge
